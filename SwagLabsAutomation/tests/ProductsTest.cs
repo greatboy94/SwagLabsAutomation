@@ -30,6 +30,6 @@ public class ProductsTest : Base
         productsPage.ClickToItem();
 
         DetailedItemPage detailedItemPage = new DetailedItemPage(GetDriver());
-        Assert.AreEqual(false, detailedItemPage.VerifyProductDetails());
+        Assert.AreEqual(true, detailedItemPage.VerifyProductDetails());
     }
 }
