@@ -1,8 +1,10 @@
 using NUnit.Allure.Attributes;
+using NUnit.Allure.Core;
 using SwagLabsAutomation.pageObjects;
 
 namespace SwagLabsAutomation.tests;
 
+[AllureNUnit]
 public class ProductsTest : Base
 {
     [Test]
