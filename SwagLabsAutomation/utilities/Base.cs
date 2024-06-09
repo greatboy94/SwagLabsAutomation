@@ -5,7 +5,7 @@ using WebDriverManager.DriverConfigs.Impl;
 
 namespace SwagLabsAutomation;
 
-public class Tests
+public class Base
 {
     public IWebDriver driver;
     
@@ -35,6 +35,11 @@ public class Tests
     {
         WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(locator));
+    }
+    
+    public static JsonReader GetDataParser()
+    {
+        return new JsonReader();
     }
     
     [TearDown]
