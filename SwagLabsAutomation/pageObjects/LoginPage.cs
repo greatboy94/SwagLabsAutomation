@@ -21,6 +21,9 @@ public class LoginPage
     
     [FindsBy(How = How.Id, Using = "login-button")]
     private IWebElement loginButtonBy;
+    
+    [FindsBy(How = How.XPath, Using = "//h3[@data-test='error']")]
+    private IWebElement errorMessageBy;
 
     public ProductsPage LoginWithCredentials(string username, string password)
     {
@@ -28,6 +31,11 @@ public class LoginPage
         passwordBy.SendKeys(password);
         loginButtonBy.Click();
 
-        return new ProductsPage();
+        return new ProductsPage(driver);
+    }
+
+    public string GetInvalidCredentialsText()
+    {
+        return errorMessageBy.Text;
     }
 }

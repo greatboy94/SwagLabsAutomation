@@ -1,3 +1,5 @@
+using Allure.Commons;
+using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
@@ -8,6 +10,7 @@ namespace SwagLabsAutomation;
 public class Base
 {
     public IWebDriver driver;
+    private AllureLifecycle allure;
     
     [SetUp]
     public void Setup()
@@ -18,6 +21,8 @@ public class Base
         
         driver.Manage().Window.Maximize();
         driver.Navigate().GoToUrl("https://www.saucedemo.com");
+        
+        allure = AllureLifecycle.Instance;
     }
 
     public IWebDriver GetDriver()
@@ -45,6 +50,14 @@ public class Base
     [TearDown]
     public void TearDown()
     {
+        if (TestContext.CurrentContext.Result.Outcome.Status==TestStatus.Failed)
+        {
+            Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
+            byte[] screenshotBytes = screenshot.AsByteArray;
+
+            allure.AddAttachment("Screenshot", "image/png", screenshotBytes);
+        }
+        
         driver.Quit();
     }
 }
