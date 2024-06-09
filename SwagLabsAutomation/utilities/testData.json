@@ -11,6 +11,12 @@
         "Username": "invaliduser",
         "Password": "12345"
       }
+    ],
+    "LockedOutUser": [
+      {
+        "Username": "locked_out_user",
+        "Password": "secret_sauce"
+      }
     ]
   }
 }

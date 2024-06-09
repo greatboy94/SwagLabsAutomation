@@ -7,14 +7,43 @@ namespace SwagLabsAutomation.tests;
 [AllureNUnit]
 public class LoginTest : Base
 {
+    private string storeProductPageText = "Products";
+    private string storeErrorText = "Epic sadface: Username and password do not match any user in this service";
+    private string storeLockedOutUserText = "Epic sadface: Sorry, this user has been locked out.";
 
     [Test]
-    [AllureDescription("Check for valid username and password login")]
+    [AllureDescription("Verify for valid username and password login")]
     [TestCaseSource(typeof(JsonReader), nameof(JsonReader.GetValidLoginTestData))]
     public void TestValidLogin(string username, string password)
     {
         LoginPage loginPage = new LoginPage(GetDriver());
         loginPage.LoginWithCredentials(username, password);
+
+        ProductsPage productsPage = new ProductsPage(GetDriver());
+        Assert.AreEqual(storeProductPageText, productsPage.GetProductsPageTitle());
+    }
+    
+    [Test]
+    [AllureDescription("Verify for invalid username and password login")]
+    [TestCaseSource(typeof(JsonReader), nameof(JsonReader.GetInvalidLoginTestData))]
+    public void TestInvalidLogin(string username, string password)
+    {
+        LoginPage loginPage = new LoginPage(GetDriver());
+        loginPage.LoginWithCredentials(username, password);
+        
+        Assert.AreEqual(storeErrorText, loginPage.GetInvalidCredentialsText());
+        Thread.Sleep(5000);
+    }
+    
+    [Test]
+    [AllureDescription("Verify for Locked Out User login")]
+    [TestCaseSource(typeof(JsonReader), nameof(JsonReader.GetLockedOutUserTestData))]
+    public void TestLockedOutUserLogin(string username, string password)
+    {
+        LoginPage loginPage = new LoginPage(GetDriver());
+        loginPage.LoginWithCredentials(username, password);
+        
+        Assert.AreEqual(storeLockedOutUserText, loginPage.GetInvalidCredentialsText());
         Thread.Sleep(5000);
     }
 }
