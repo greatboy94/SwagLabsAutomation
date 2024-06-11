@@ -34,4 +34,18 @@ public class ProductsTest : Base
         DetailedItemPage detailedItemPage = new DetailedItemPage(GetDriver());
         Assert.AreEqual(true, detailedItemPage.VerifyProductDetails());
     }
+    
+    [Test]
+    [AllureDescription("Verify Add To Card")]
+    [TestCaseSource(typeof(JsonReader), nameof(JsonReader.GetValidLoginTestData))]
+    public void TestAddToCard(string username, string password)
+    {
+        LoginPage loginPage = new LoginPage(GetDriver());
+        loginPage.LoginWithCredentials(username, password);
+
+        ProductsPage productsPage = new ProductsPage(GetDriver());
+        productsPage.AddToCart();
+        Assert.AreEqual(1, productsPage.GetCartBadgeCount());
+        Thread.Sleep(5000);
+    }
 }
