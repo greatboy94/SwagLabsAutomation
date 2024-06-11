@@ -1,4 +1,6 @@
+using System.Collections;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.PageObjects;
 
 namespace SwagLabsAutomation.pageObjects;
@@ -34,12 +36,11 @@ public class ProductsPage
     [FindsBy(How = How.Id, Using = "remove-sauce-labs-backpack")]
     private IWebElement removeButtonBy;
     
-    [FindsBy(How = How.XPath, Using = "//div[@class='inventory_item_name']")]
+    [FindsBy(How = How.XPath, Using = "//div[@class='inventory_item_name ']")]
     private IList<IWebElement> allItemNameBy;
     
-    private readonly By removeButtonBy2 = By.XPath("//button[contains(text(),'Remove')]");
-    
-  
+    [FindsBy(How = How.ClassName, Using = "product_sort_container")]
+    private IWebElement sortButtonBy;
 
     public string GetProductsPageTitle()
     {
@@ -90,21 +91,29 @@ public class ProductsPage
         removeButtonBy.Click();
     }
 
-    // public bool VerifyItemRemoved()
-    // {
-    //     return countBadgeBy.Displayed;
-    // }
-    //
-    // public void RemoveFromCart(string productName)
-    // {
-    //     foreach (var product in allItemNameBy)
-    //     {
-    //         if (product.Text == productName)
-    //         {
-    //             product.FindElement(removeButtonBy2).Click();
-    //             Console.WriteLine($"{productName} removed from cart.");
-    //             break;
-    //         }
-    //     }
-    // }
+    public ArrayList BeforeSorting()
+    {
+        ArrayList itemsBeforeSorting = new ArrayList();
+        
+        foreach (var product in allItemNameBy)
+        {
+            itemsBeforeSorting.Add(product.Text);
+        }
+
+        return itemsBeforeSorting;
+    }
+
+    public ArrayList AfterSorting()
+    {
+        SelectElement selectElement = new SelectElement(sortButtonBy);
+        selectElement.SelectByValue("za");
+        
+        ArrayList itemsAfterSorting = new ArrayList();
+        foreach (var product in allItemNameBy)
+        {
+            itemsAfterSorting.Add(product.Text);
+        }
+
+        return itemsAfterSorting;
+    }
 }

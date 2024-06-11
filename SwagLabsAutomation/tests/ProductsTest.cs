@@ -60,4 +60,16 @@ public class ProductsTest : Base
         productsPage.RemoveItemFromCart();
         Assert.AreEqual(0, productsPage.GetCartBadgeCount(), "The cart badge count should be 0.");
     }
+    
+    [Test]
+    [AllureDescription("Verify Item Removed from Cart")]
+    [TestCaseSource(typeof(JsonReader), nameof(JsonReader.GetValidLoginTestData))]
+    public void TestSortItems(string username, string password)
+    {
+        LoginPage loginPage = new LoginPage(GetDriver());
+        loginPage.LoginWithCredentials(username, password);
+
+        ProductsPage productsPage = new ProductsPage(GetDriver());
+        Assert.AreNotEqual(productsPage.BeforeSorting(), productsPage.AfterSorting());
+    }
 }
