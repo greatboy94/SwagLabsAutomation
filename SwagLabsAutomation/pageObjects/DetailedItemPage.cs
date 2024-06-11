@@ -28,14 +28,4 @@ public class DetailedItemPage
         return productDescriptionBy.Displayed;
         return productPriceBy.Displayed;
     }
-    //
-    // public bool VerifyProductDescription()
-    // {
-    //     return productDescriptionBy.Displayed;
-    // }
-    //
-    // public bool VerifyPrice()
-    // {
-    //     return productPriceBy.Displayed;
-    // }
 }

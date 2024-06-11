@@ -36,16 +36,28 @@ public class ProductsTest : Base
     }
     
     [Test]
-    [AllureDescription("Verify Add To Card")]
+    [AllureDescription("Verify Item Added To Cart")]
     [TestCaseSource(typeof(JsonReader), nameof(JsonReader.GetValidLoginTestData))]
-    public void TestAddToCard(string username, string password)
+    public void TestAddToCart(string username, string password)
     {
         LoginPage loginPage = new LoginPage(GetDriver());
         loginPage.LoginWithCredentials(username, password);
 
         ProductsPage productsPage = new ProductsPage(GetDriver());
         productsPage.AddToCart();
-        Assert.AreEqual(1, productsPage.GetCartBadgeCount());
-        Thread.Sleep(5000);
+        Assert.AreEqual(1, productsPage.GetCartBadgeCount(), "The cart badge count should be 1.");
+    }
+    
+    [Test]
+    [AllureDescription("Verify Item Removed from Cart")]
+    [TestCaseSource(typeof(JsonReader), nameof(JsonReader.GetValidLoginTestData))]
+    public void TestRemoveFromCart(string username, string password)
+    {
+        LoginPage loginPage = new LoginPage(GetDriver());
+        loginPage.LoginWithCredentials(username, password);
+
+        ProductsPage productsPage = new ProductsPage(GetDriver());
+        productsPage.RemoveItemFromCart();
+        Assert.AreEqual(0, productsPage.GetCartBadgeCount(), "The cart badge count should be 0.");
     }
 }
