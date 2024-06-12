@@ -32,7 +32,6 @@ public class LoginTest : Base
         loginPage.LoginWithCredentials(username, password);
         
         Assert.AreEqual(storeErrorText, loginPage.GetInvalidCredentialsText());
-        Thread.Sleep(5000);
     }
     
     [Test]
@@ -44,6 +43,5 @@ public class LoginTest : Base
         loginPage.LoginWithCredentials(username, password);
         
         Assert.AreEqual(storeLockedOutUserText, loginPage.GetInvalidCredentialsText());
-        Thread.Sleep(5000);
     }
 }

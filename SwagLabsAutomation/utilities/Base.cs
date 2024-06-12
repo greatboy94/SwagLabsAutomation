@@ -57,7 +57,6 @@ public class Base
 
             allure.AddAttachment("Screenshot", "image/png", screenshotBytes);
         }
-        
         driver.Quit();
     }
 }
