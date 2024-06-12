@@ -41,6 +41,24 @@ public class ProductsPage
     
     [FindsBy(How = How.ClassName, Using = "product_sort_container")]
     private IWebElement sortButtonBy;
+    
+    [FindsBy(How = How.ClassName, Using = "bm-burger-button")]
+    private IWebElement menuButtonBy;
+    
+    [FindsBy(How = How.XPath, Using = "//a[@tabindex='0']")]
+    private IList<IWebElement> menuItemsBy;
+    
+    [FindsBy(How = How.Id, Using = "inventory_sidebar_link")]
+    private IWebElement allItemsOption;
+
+    [FindsBy(How = How.Id, Using = "about_sidebar_link")]
+    private IWebElement aboutOption;
+
+    [FindsBy(How = How.Id, Using = "logout_sidebar_link")]
+    private IWebElement logoutOption;
+
+    [FindsBy(How = How.Id, Using = "reset_sidebar_link")]
+    private IWebElement resetAppStateOption;
 
     public string GetProductsPageTitle()
     {
@@ -99,7 +117,6 @@ public class ProductsPage
         {
             itemsBeforeSorting.Add(product.Text);
         }
-
         return itemsBeforeSorting;
     }
 
@@ -113,7 +130,16 @@ public class ProductsPage
         {
             itemsAfterSorting.Add(product.Text);
         }
-
         return itemsAfterSorting;
+    }
+
+    public void ClickToSidebarMenu()
+    {
+        menuButtonBy.Click();
+    }
+
+    public bool AreAllSidebarMenuOptionsDisplayed()
+    {
+        return allItemsOption.Displayed && aboutOption.Displayed && logoutOption.Displayed && resetAppStateOption.Displayed;
     }
 }

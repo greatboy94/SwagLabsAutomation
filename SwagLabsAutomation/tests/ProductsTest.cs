@@ -1,5 +1,6 @@
 using NUnit.Allure.Attributes;
 using NUnit.Allure.Core;
+using OpenQA.Selenium;
 using SwagLabsAutomation.pageObjects;
 
 namespace SwagLabsAutomation.tests;
@@ -62,7 +63,7 @@ public class ProductsTest : Base
     }
     
     [Test]
-    [AllureDescription("Verify Item Removed from Cart")]
+    [AllureDescription("Verify Sort Functionality")]
     [TestCaseSource(typeof(JsonReader), nameof(JsonReader.GetValidLoginTestData))]
     public void TestSortItems(string username, string password)
     {
@@ -71,5 +72,20 @@ public class ProductsTest : Base
 
         ProductsPage productsPage = new ProductsPage(GetDriver());
         Assert.AreNotEqual(productsPage.BeforeSorting(), productsPage.AfterSorting());
+    }
+    
+    [Test]
+    [AllureDescription("Verify Sidebar Menu")]
+    [TestCaseSource(typeof(JsonReader), nameof(JsonReader.GetValidLoginTestData))]
+    public void TestSidebarMenu(string username, string password)
+    {
+        LoginPage loginPage = new LoginPage(GetDriver());
+        loginPage.LoginWithCredentials(username, password);
+
+        ProductsPage productsPage = new ProductsPage(GetDriver());
+        productsPage.ClickToSidebarMenu();
+        WaitForElementIsVisible(By.Id("inventory_sidebar_link"));
+        Assert.IsTrue(productsPage.AreAllSidebarMenuOptionsDisplayed());
+        Thread.Sleep(5000);
     }
 }
