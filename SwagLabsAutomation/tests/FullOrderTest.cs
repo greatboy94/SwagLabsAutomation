@@ -6,6 +6,7 @@ using SwagLabsAutomation.pageObjects;
 namespace SwagLabsAutomation.tests;
 
 [AllureNUnit]
+[AllureSuite("Full Order Functionality")]
 public class FullOrderTest : Base
 {
     [Test]

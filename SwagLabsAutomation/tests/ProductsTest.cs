@@ -6,6 +6,7 @@ using SwagLabsAutomation.pageObjects;
 namespace SwagLabsAutomation.tests;
 
 [AllureNUnit]
+[AllureSuite("Product Functionality")]
 public class ProductsTest : Base
 {
     [Test]

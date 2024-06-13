@@ -5,8 +5,7 @@ using SwagLabsAutomation.pageObjects;
 namespace SwagLabsAutomation.tests;
 
 [AllureNUnit]
-[AllureSuite("Login Suit")]
-//[AllureFeature("Login Feature")]
+[AllureSuite("Login Functionality")]
 public class LoginTest : Base
 {
     private string storeProductPageText = "Products";
