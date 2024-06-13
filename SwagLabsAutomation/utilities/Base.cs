@@ -9,7 +9,8 @@ namespace SwagLabsAutomation;
 
 public class Base
 {
-    public IWebDriver driver;
+    //public IWebDriver driver;
+    public ThreadLocal<IWebDriver> driver = new ThreadLocal<IWebDriver>();
     private AllureLifecycle allure;
     
     [SetUp]
@@ -17,28 +18,28 @@ public class Base
     {
 
         new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig());
-        driver = new ChromeDriver();
+        driver.Value = new ChromeDriver();
         
-        driver.Manage().Window.Maximize();
-        driver.Navigate().GoToUrl("https://www.saucedemo.com");
+        driver.Value.Manage().Window.Maximize();
+        driver.Value.Navigate().GoToUrl("https://www.saucedemo.com");
         
         allure = AllureLifecycle.Instance;
     }
 
     public IWebDriver GetDriver()
     {
-        return driver;
+        return driver.Value;
     }
     
     protected void WaitForElementIsVisible(By locator)
     {
-        WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver.Value, TimeSpan.FromSeconds(10));
         wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(locator));
     }
 
     protected void WaitForElementToBeClickable(By locator)
     {
-        WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver.Value, TimeSpan.FromSeconds(10));
         wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(locator));
     }
     
@@ -57,6 +58,6 @@ public class Base
 
             allure.AddAttachment("Screenshot", "image/png", screenshotBytes);
         }
-        driver.Quit();
+        driver.Value.Quit();
     }
 }

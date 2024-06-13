@@ -6,6 +6,7 @@ namespace SwagLabsAutomation.tests;
 
 [AllureNUnit]
 [AllureSuite("Login Functionality")]
+[Parallelizable(ParallelScope.Children)]
 public class LoginTest : Base
 {
     private string storeProductPageText = "Products";

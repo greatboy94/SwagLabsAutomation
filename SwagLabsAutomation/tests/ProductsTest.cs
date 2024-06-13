@@ -7,6 +7,7 @@ namespace SwagLabsAutomation.tests;
 
 [AllureNUnit]
 [AllureSuite("Product Functionality")]
+[Parallelizable(ParallelScope.Children)]
 public class ProductsTest : Base
 {
     [Test]
