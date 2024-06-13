@@ -62,6 +62,9 @@ public class ProductsPage
     
     private By productImageBy = By.XPath("//div[@class='inventory_item_img']");
     
+    [FindsBy(How = How.ClassName, Using = "shopping_cart_link")]
+    private IWebElement shoppingcartBy;
+    
 
     public string GetProductsPageTitle()
     {
@@ -157,5 +160,13 @@ public class ProductsPage
             }
         }
         return true;
-    } 
+    }
+
+    public YourCartPage AddItemToCart()
+    {
+        AddToCart();
+        shoppingcartBy.Click();
+
+        return new YourCartPage(driver);
+    }
 }
