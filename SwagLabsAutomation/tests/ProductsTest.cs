@@ -86,6 +86,17 @@ public class ProductsTest : Base
         productsPage.ClickToSidebarMenu();
         WaitForElementIsVisible(By.Id("inventory_sidebar_link"));
         Assert.IsTrue(productsPage.AreAllSidebarMenuOptionsDisplayed());
-        Thread.Sleep(5000);
+    }
+    
+    [Test]
+    [AllureDescription("Verify Item Images visible")]
+    [TestCaseSource(typeof(JsonReader), nameof(JsonReader.GetValidLoginTestData))]
+    public void TestItemImages(string username, string password)
+    {
+        LoginPage loginPage = new LoginPage(GetDriver());
+        loginPage.LoginWithCredentials(username, password);
+
+        ProductsPage productsPage = new ProductsPage(GetDriver());
+        Assert.IsTrue(productsPage.AreAllProductImagesDisplayed());
     }
 }

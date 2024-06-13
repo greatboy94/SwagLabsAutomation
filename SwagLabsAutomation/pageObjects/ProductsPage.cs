@@ -59,6 +59,9 @@ public class ProductsPage
 
     [FindsBy(How = How.Id, Using = "reset_sidebar_link")]
     private IWebElement resetAppStateOption;
+    
+    private By productImageBy = By.XPath("//div[@class='inventory_item_img']");
+    
 
     public string GetProductsPageTitle()
     {
@@ -142,4 +145,17 @@ public class ProductsPage
     {
         return allItemsOption.Displayed && aboutOption.Displayed && logoutOption.Displayed && resetAppStateOption.Displayed;
     }
+
+    public bool AreAllProductImagesDisplayed()
+    {
+        foreach (var product in inventoryItemsBy)
+        {
+            var productImage = product.FindElement(productImageBy);
+            if (!productImage.Displayed)
+            {
+                return false;
+            }
+        }
+        return true;
+    } 
 }
