@@ -59,6 +59,12 @@ public class ProductsPage
 
     [FindsBy(How = How.Id, Using = "reset_sidebar_link")]
     private IWebElement resetAppStateOption;
+    
+    private By productImageBy = By.XPath("//div[@class='inventory_item_img']");
+    
+    [FindsBy(How = How.ClassName, Using = "shopping_cart_link")]
+    private IWebElement shoppingcartBy;
+    
 
     public string GetProductsPageTitle()
     {
@@ -141,5 +147,26 @@ public class ProductsPage
     public bool AreAllSidebarMenuOptionsDisplayed()
     {
         return allItemsOption.Displayed && aboutOption.Displayed && logoutOption.Displayed && resetAppStateOption.Displayed;
+    }
+
+    public bool AreAllProductImagesDisplayed()
+    {
+        foreach (var product in inventoryItemsBy)
+        {
+            var productImage = product.FindElement(productImageBy);
+            if (!productImage.Displayed)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public YourCartPage AddItemToCart()
+    {
+        AddToCart();
+        shoppingcartBy.Click();
+
+        return new YourCartPage(driver);
     }
 }
