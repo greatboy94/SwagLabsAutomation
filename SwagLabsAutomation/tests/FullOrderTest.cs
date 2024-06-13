@@ -33,7 +33,6 @@ public class FullOrderTest : Base
 
         CheckoutCompletePage checkoutCompletePage = new CheckoutCompletePage(GetDriver());
         WaitForElementIsVisible(By.ClassName("complete-header"));
-        Console.WriteLine(checkoutCompletePage.GetCompleteText());
         Assert.AreEqual("Thank you for your order!", checkoutCompletePage.GetCompleteText());
     }
 }
