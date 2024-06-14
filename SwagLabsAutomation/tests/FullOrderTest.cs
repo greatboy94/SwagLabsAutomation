@@ -12,7 +12,7 @@ public class FullOrderTest : Base
     [Test]
     [AllureDescription("Verify Whole Order Item Flow")]
     [TestCaseSource(typeof(JsonReader), nameof(JsonReader.GetValidLoginTestData))]
-    public void TestValidLogin(string username, string password)
+    public void TestWholeOrderFlow(string username, string password)
     {
         LoginPage loginPage = new LoginPage(GetDriver());
         loginPage.LoginWithCredentials(username, password);
